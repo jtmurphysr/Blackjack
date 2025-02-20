@@ -5,6 +5,7 @@ print(art.logo)
 
 game_over = False
 
+
 def create_deck():
     """Create a standard 52-card deck."""
     suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades']
@@ -17,6 +18,7 @@ def shuffle_deck(deck):
     random.shuffle(deck)
     return deck
 
+
 def deal_card(deck):
     """Deal one card from the deck."""
     return deck.pop()
@@ -26,6 +28,7 @@ def print_hand(hand):
     """Print a player's hand."""
     for card in hand:
         print(card[0], card[1])
+
 
 def score_hand(hand):
     """Calculate the total score of cards in hand."""
@@ -41,14 +44,14 @@ def score_hand(hand):
         else:
             total += int(rank)
 
-
     # If total exceeds 21 and there's an ace, reduce its value from 11 to 1
     while total > 21 and aces:
         total -= 10
         aces -= 1
 
     return total
-    
+
+
 def print_hand(hand, hide_first_card=False):
     """
     Print the cards in a hand.
@@ -65,12 +68,13 @@ def print_hand(hand, hide_first_card=False):
         print("Total value:", score_hand(hand))
     print()
 
+
 def blackjack():
     while True:
-        #create and shuffle the deck
+        # create and shuffle the deck
         deck = create_deck()
         deck = shuffle_deck(deck)
-        
+
         # Deal initial hands
         player_hand = [deal_card(deck), deal_card(deck)]
         dealer_hand = [deal_card(deck), deal_card(deck)]
@@ -81,7 +85,7 @@ def blackjack():
         print("Player's Hand:")
         print_hand(player_hand)
 
-        #Player's turn
+        # Player's turn
         while score_hand(player_hand) < 21:
             action = input("Type 'h' to hit or 's' to stand: ").lower()
             if action == 'h':
@@ -103,7 +107,7 @@ def blackjack():
             else:
                 print("Invalid action. Please try again.")
 
-        #Dealer's turn
+        # Dealer's turn
         print("Dealer's Turn:")
         print_hand(dealer_hand)
         while score_hand(dealer_hand) < 17:
@@ -117,7 +121,7 @@ def blackjack():
             else:
                 continue
 
-        #Game Outcome
+        # Game Outcome
         print("\nFinal Results:")
         print("Dealer's Hand:")
         print_hand(dealer_hand)
@@ -126,23 +130,28 @@ def blackjack():
 
         if score_hand(player_hand) == score_hand(dealer_hand):
             print("It's a draw!")
+            break
         elif score_hand(player_hand) > 21:
             print("You went over. You lose!")
+            break
         elif score_hand(dealer_hand) > 21:
             print("Dealer went over. You win!")
+            break
         elif score_hand(player_hand) > score_hand(dealer_hand):
             print("You win!")
+            break
         else:
             print("Dealer wins!")
-            
-        play_again = input("\nWould you like to play again? (y/n): ").lower()
-        if play_again != 'y':
             break
+
+
 
 # Start the game
 while True:
     blackjack()
-    break  # Remove this line if you want to keep playing multiple games
-
+    print("Checking for Play Again")
+    play_again = input("\nWould you like to play again? (y/n): ").lower()
+    if play_again != 'y':
+        break
 
 
